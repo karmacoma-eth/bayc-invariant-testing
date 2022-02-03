@@ -4,6 +4,20 @@ Based on:
 
 - https://github.com/gakonst/dapptools-template
 - https://github.com/dapphub/dapptools/tree/master/src/dapp#invariant-testing
+- https://twitter.com/nnnnicholas/status/1488956145872130052
+
+You can see an example of the failed invariant test in [invariantFailure.log](https://github.com/karmacoma-eth/bayc-invariant-testing/blob/main/invariantFailure.log)
+
+The test in [src/test/BoredApeYachtClub.t.sol](https://github.com/karmacoma-eth/bayc-invariant-testing/blob/main/src/test/BoredApeYachtClub.t.sol) has this:
+
+```
+    function invariantTotalSupply() public {
+        assertLe(bayc.totalSupply(), MAX_APES);
+    }
+```
+
+It ensures that the `totalSupply()` of bored apes remains under the defined maximum. However the test fails, and gives an example that shows how to violate that invariant: the owner can call `bayc.reserveApes()` at any time and bypass the `MAX_APES` check, therefore the supply of bored apes is actually unlimited.
+
 
 ## Building and testing
 
